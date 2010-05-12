@@ -1,0 +1,13 @@
+"2.1 (created: 2009/05/21 13:13:06)
+
+map <C-r> :restart<CR>
+nmap <C-r> :restart<CR>
+vmap <C-R> :restart<CR>
+
+colorscheme pseup
+set guioptions=b
+set defsearch=scroogle
+
+set runtimepath=/home/pseup/.vimperator
+source! /home/pseup/.vimperatorrc.local
+" vim: set ft=vimperator:
