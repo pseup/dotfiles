@@ -40,9 +40,6 @@ pTerm = "urxvtc"
 
 dzenOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313'"
 dzenWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzenOptions
-dzenTopRight    = "dzen2 -ta r -w 960 -x 960" ++ dzenOptions
-dzenBottomLeft  = "dzen2 -ta l -w 960 -y 1180" ++ dzenOptions
-dzenBottomRight = "dzen2 -ta r -w 960 -x 960 -y 1180" ++ dzenOptions
 
 pModMask = mod4Mask
 pBorder = 3
@@ -54,9 +51,6 @@ focusedBorderColor' = "#3A78C8"
 -- Main {{{
 main = do
        spWorkspaces <- spawnPipe dzenWorkspaces
---       spTopRight   <- spawnPipe dzenTopRight
---       spBottomLeft <- spawnPipe dzenBottomLeft
---       spBottomRight<- spawnPipe dzenBottomRight
        xmonad $ withUrgencyHook NoUrgencyHook
               $ defaultConfig
               { workspaces = pWorkspaces
