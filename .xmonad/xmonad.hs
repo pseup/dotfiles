@@ -1,4 +1,4 @@
--- slyfly's Xmonad Config (0.9)
+-- pseup's Xmonad Config (0.9)
 
 -- Import {{{
 import XMonad
