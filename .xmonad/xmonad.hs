@@ -9,17 +9,17 @@ import System.Exit
 import System.IO (Handle, hPutStrLn)
 
 import XMonad.Hooks.DynamicLog ( PP(..), dynamicLogWithPP, dzenColor, shorten, wrap, defaultPP )
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Hooks.UrgencyHook
 
-import XMonad.Layout.Accordion
 import XMonad.Layout.Combo
 import XMonad.Layout.Gaps
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.PerWorkspace ( onWorkspace )
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 
 import XMonad.Operations
@@ -44,7 +44,7 @@ dzenWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzenOptions
 pModMask = mod4Mask
 pBorder = 3
 normalBorderColor'  = "#131313"
-focusedBorderColor' = "#3A78C8"
+focusedBorderColor' = "#131313"
 
 -- }}}
 --------------------------------
@@ -61,7 +61,8 @@ main = do
               , terminal = pTerm
               , keys = pKeys
               , logHook = dynamicLogWithPP $ customPP spWorkspaces
-              , manageHook = manageHook defaultConfig <+> pManageHook
+              --, manageHook = manageHook defaultConfig <+> pManageHook <+> xPropManageHook pPropHook
+              , manageHook = pManageHook
               , layoutHook = pLayout
               }
 -- }}}
@@ -105,13 +106,13 @@ pWorkspaces :: [WorkspaceId]
 pWorkspaces = ["Code", "Web", "Media", "Util", "Misc"]
 
 pLayout = onWorkspace "Code" threecol
-        $ onWorkspace "Media" nogaps
-        $ gap (Mirror tiled) ||| gap tiled ||| nogaps ||| Tall 1 (2/100) (3/4)
+        $ onWorkspace "Media" empty
+        $ gap (Mirror tiled) ||| gap tiled ||| nogaps ||| Tall 1 (1/100) (3/4)
   where
-    tiled    = named "Tall" $ spacing 3 $ Tall 1 (2/100) (3/4)
+    tiled    = named "Tall" $ spacing 3 $ ResizableTall 1 (1/100) (3/4) []
     threecol = named "ThreeCol" $ gap $ spacing 3 $ ThreeCol 1 (3/100) (1/3)
     gap      = gaps [(D,21), (U,3), (L,3), (R,3)]
-    nogaps   = gaps [(D, 0), (U,3)] $ smartBorders Full
+    nogaps   = gaps [(D, 0), (U,0)] $ smartBorders Full
     empty    = smartBorders Full
 
 -- }}}
@@ -119,15 +120,17 @@ pLayout = onWorkspace "Code" threecol
 -- Hooks {{{
 --pManageHook :: ManageHook
 pManageHook = composeAll . concat $
-  [ [ className =? c --> doFloat | c <- cFloats ]
+  [ [ isFullscreen --> doFloat ]
+  , [ className =? c --> placeHook (fixed (0.5,0.5)) <+> doFloat | c <- cFloats ]
   , [ title     =? t --> doFloat | t <- tFloats ]
   , [ className =? "MPlayer" --> doF (W.shift "Media") ]
   , [ resource  =? "rtorrent" --> doF (W.shift "Util") ]
   , [ resource  =? "ncmpc"    --> doF (W.shift "Util") ]
   , [ className =? "XCalc" --> placeHook (fixed (1,0.5)) <+> doFloat ]
+  , [ resource  =? "popTerm"  --> placeHook (fixed (0.5,0.5)) <+> doFloat ]
   ]
   where
-    cFloats = ["feh", "Mpdtab", "Blender:Render"]
+    cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer", "Gimp" ]
     tFloats = ["Downloads", "_<<codetest" ]
 -- }}}
 --------------------------------
@@ -138,8 +141,9 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- launching and killing programs
     [ ((modMask .|. shiftMask, xK_t         ), spawn $ XMonad.terminal conf) -- %! Launch terminal
     , ((modMask,               xK_p         ), shellPrompt pXPConfig) -- Open shell prompt
+    , ((modMask .|. shiftMask, xK_p         ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
 --    , ((0,                     xK_Multi_key ), shellPrompt pXPConfig) -- ^
-    , ((modMask .|. shiftMask, xK_p         ), xmonadPrompt pXPConfig)
+--    , ((modMask .|. shiftMask, xK_p         ), xmonadPrompt pXPConfig)
     , ((modMask .|. shiftMask, xK_c         ), kill) -- %! Close the focused window
     , ((modMask .|. shiftMask, xK_v         ), spawn "urxvtc -e vim")
     , ((modMask .|. shiftMask, xK_w         ), spawn "firefox")
@@ -180,6 +184,9 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- resizing the master/slave ratio
     , ((modMask,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
     , ((modMask,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+
+    , ((modMask .|. shiftMask, xK_h     ), sendMessage MirrorShrink)
+    , ((modMask .|. shiftMask, xK_l     ), sendMessage MirrorExpand)
 
     -- floating layer support
     , ((modMask,               xK_t     ), withFocused $ windows . W.sink) -- %! Push window back into tiling
