@@ -9,6 +9,7 @@ import System.Exit
 import System.IO (Handle, hPutStrLn)
 
 import XMonad.Hooks.DynamicLog ( PP(..), dynamicLogWithPP, dzenColor, shorten, wrap, defaultPP )
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Hooks.UrgencyHook
@@ -26,28 +27,25 @@ import XMonad.Operations
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Prompt.XMonad
 
 import XMonad.Util.Run (spawnPipe)
 -- }}}
---------------------------------
+
 -- Settings {{{
+pTerm       = "urxvtc"
+pModMask    = mod4Mask
+pBorder     = 3
+pNormColor  = "#131313"
+pFocusColor = "#131313"
+
 pIconDir = "/home/pseup/.xmonad/icons/"
 pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
 pFont2   = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
 
-pTerm = "urxvtc"
-
 dzenOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313'"
 dzenWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzenOptions
-
-pModMask = mod4Mask
-pBorder = 3
-normalBorderColor'  = "#131313"
-focusedBorderColor' = "#131313"
-
 -- }}}
---------------------------------
+
 -- Main {{{
 main = do
        spWorkspaces <- spawnPipe dzenWorkspaces
@@ -56,17 +54,16 @@ main = do
               { workspaces = pWorkspaces
               , modMask = pModMask
               , borderWidth = pBorder
-              , normalBorderColor = normalBorderColor'
-              , focusedBorderColor = focusedBorderColor'
+              , normalBorderColor = pNormColor
+              , focusedBorderColor = pFocusColor
               , terminal = pTerm
               , keys = pKeys
               , logHook = dynamicLogWithPP $ customPP spWorkspaces
-              --, manageHook = manageHook defaultConfig <+> pManageHook <+> xPropManageHook pPropHook
               , manageHook = pManageHook
               , layoutHook = pLayout
               }
 -- }}}
---------------------------------
+
 -- Dzen Pretty Printer {{{
 customPP i = defaultPP
            { ppCurrent = wrap "^fg(#131313)^bg(#3A78C8)^p(6)" "^p(6)^fg()^bg()"
@@ -85,9 +82,10 @@ customPP i = defaultPP
            , ppWsSep   = ""
            , ppOutput  = hPutStrLn i
            }
+
 -- }}}
---------------------------------
--- Prompt Setup {{{
+
+-- Prompt Settings {{{
 pXPConfig :: XPConfig
 pXPConfig = defaultXPConfig
           { position    = Top
@@ -100,25 +98,21 @@ pXPConfig = defaultXPConfig
           , historyFilter = deleteConsecutive
           }
 -- }}}
---------------------------------
--- Workspaces & Layouts {{{
-pWorkspaces :: [WorkspaceId]
-pWorkspaces = ["Code", "Web", "Media", "Util", "Misc"]
 
-pLayout = onWorkspace "Code" threecol
-        $ onWorkspace "Media" empty
-        $ gap (Mirror tiled) ||| gap tiled ||| nogaps ||| Tall 1 (1/100) (3/4)
+-- Workspaces & Layouts {{{
+pWorkspaces = ["Code", "Web", "Media", "Util", "Misc"]
+pLayout = onWorkspace "Code" (gap threecol)
+        $ onWorkspace "Media" full
+        $ gap (Mirror tiled) ||| gap tiled ||| nogap
   where
     tiled    = named "Tall" $ spacing 3 $ ResizableTall 1 (1/100) (3/4) []
-    threecol = named "ThreeCol" $ gap $ spacing 3 $ ThreeCol 1 (3/100) (1/3)
+    threecol = named "ThreeCol" $ spacing 3 $ ThreeCol 1 (3/100) (1/3)
     gap      = gaps [(D,21), (U,3), (L,3), (R,3)]
-    nogaps   = gaps [(D, 0), (U,0)] $ smartBorders Full
-    empty    = smartBorders Full
-
+    nogap    = avoidStruts $ smartBorders Full
+    full     = smartBorders Full
 -- }}}
---------------------------------
+
 -- Hooks {{{
---pManageHook :: ManageHook
 pManageHook = composeAll . concat $
   [ [ isFullscreen --> doFloat ]
   , [ className =? c --> placeHook (fixed (0.5,0.5)) <+> doFloat | c <- cFloats ]
@@ -131,19 +125,15 @@ pManageHook = composeAll . concat $
   ]
   where
     cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer", "Gimp" ]
-    tFloats = ["Downloads", "_<<codetest" ]
+    tFloats = ["Downloads", "-$> codetest" ]
 -- }}}
---------------------------------
--- Key Bindings {{{
 
---pKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
+-- Key Bindings {{{
 pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- launching and killing programs
     [ ((modMask .|. shiftMask, xK_t         ), spawn $ XMonad.terminal conf) -- %! Launch terminal
     , ((modMask,               xK_p         ), shellPrompt pXPConfig) -- Open shell prompt
     , ((modMask .|. shiftMask, xK_p         ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
---    , ((0,                     xK_Multi_key ), shellPrompt pXPConfig) -- ^
---    , ((modMask .|. shiftMask, xK_p         ), xmonadPrompt pXPConfig)
     , ((modMask .|. shiftMask, xK_c         ), kill) -- %! Close the focused window
     , ((modMask .|. shiftMask, xK_v         ), spawn "urxvtc -e vim")
     , ((modMask .|. shiftMask, xK_w         ), spawn "firefox")
