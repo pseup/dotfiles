@@ -1,20 +1,17 @@
--- pseup's Xmonad Config (0.9)
+--
+--  xmonad.hs - i.pseup@gmail.com
+--
 
 -- Import {{{
 import XMonad
-import Graphics.X11.Xlib
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
-import System.IO (Handle, hPutStrLn)
 
-import XMonad.Hooks.DynamicLog ( PP(..), dynamicLogWithPP, dzenColor, shorten, wrap, defaultPP )
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.Place
 import XMonad.Hooks.UrgencyHook
 
-import XMonad.Layout.Combo
 import XMonad.Layout.Gaps
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
@@ -23,12 +20,8 @@ import XMonad.Layout.PerWorkspace ( onWorkspace )
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 
-import XMonad.Operations
-
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-
-import XMonad.Util.Run (spawnPipe)
 -- }}}
 
 -- Settings {{{
@@ -41,164 +34,165 @@ pFocusColor = "#131313"
 pIconDir = "/home/pseup/.xmonad/icons/"
 pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
 pFont2   = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
+pFont3   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
 
-dzenOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313'"
+dzenOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313' -e 'onstart=lower'"
 dzenWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzenOptions
 -- }}}
 
 -- Main {{{
-main = do
-       spWorkspaces <- spawnPipe dzenWorkspaces
-       xmonad $ withUrgencyHook NoUrgencyHook
-              $ defaultConfig
-              { workspaces = pWorkspaces
-              , modMask = pModMask
-              , borderWidth = pBorder
-              , normalBorderColor = pNormColor
-              , focusedBorderColor = pFocusColor
-              , terminal = pTerm
-              , keys = pKeys
-              , logHook = dynamicLogWithPP $ customPP spWorkspaces
-              , manageHook = pManageHook
-              , layoutHook = pLayout
-              }
+main = xmonad =<< statusBar cmd pp kb conf
+  where
+    uhook = withUrgencyHookC NoUrgencyHook urgConfig
+    cmd   = dzenWorkspaces
+    pp    = dzPP
+    kb    = toggleStrutsKey
+    conf  = uhook myConfig
 -- }}}
 
--- Dzen Pretty Printer {{{
-customPP i = defaultPP
-           { ppCurrent = wrap "^fg(#131313)^bg(#3A78C8)^p(6)" "^p(6)^fg()^bg()"
-           , ppHidden  = wrap "^p(6)" "^p(6)"
-           , ppHiddenNoWindows = wrap "^fg(#555555)^p(6)" "^p(6)^fg()"
-           , ppUrgent  = wrap "^fg(#AE3232)^bg(#131313)" "^fg()^bg()"
-           , ppLayout  = (\x -> case x of
-                                     "Tall"        -> "^i(" ++ pIconDir ++ "/tileright.xbm)"
-                                     "Mirror Tall" -> "^i(" ++ pIconDir ++ "/tilebottom.xbm)"
-                                     "Full"        -> "^i(" ++ pIconDir ++ "/max.xbm)"
-                                     "ThreeCol"    -> "^i(" ++ pIconDir ++ "/threecol.xbm)"
-                                     _             -> x
-                         )
-           , ppTitle   = wrap "^p(6)" "^p(6)" . shorten 100
-           , ppSep     = " "
-           , ppWsSep   = ""
-           , ppOutput  = hPutStrLn i
-           }
+-- Config {{{
+myConfig = defaultConfig { workspaces = pWorkspaces
+                         , layoutHook = pLayout
+                         , manageHook = pManageHook
+                         , borderWidth = pBorder
+                         , normalBorderColor  = pNormColor
+                         , focusedBorderColor = pFocusColor
+                         , terminal = pTerm
+                         , modMask = pModMask
+                         , keys = pKeys
+                         }
 
+
+urgConfig = UrgencyConfig { suppressWhen = Focused
+                          , remindWhen   = Dont }
+-- }}}
+
+-- dzen PP {{{
+dzPP = defaultPP
+     { ppCurrent = dzenColor "#131313" "#3A78C8" . pad
+     , ppHidden  = pad
+     , ppHiddenNoWindows = dzenColor "#555555" "" . pad
+     , ppUrgent  = dzenColor "#AE3232" "" . pad
+     , ppLayout  = (\x -> case x of
+                     "Tall"        -> "^i(" ++ pIconDir ++ "/tileright.xbm)"
+                     "Mirror Tall" -> "^i(" ++ pIconDir ++ "/tilebottom.xbm)"
+                     "Full"        -> "^i(" ++ pIconDir ++ "/max.xbm)"
+                     "TriCol"      -> "^i(" ++ pIconDir ++ "/threecol.xbm)"
+                     _             -> "^i(" ++ pIconDir ++ "/unknown.xbm)"
+                     )
+     , ppTitle   = wrap "^p(6)" "^p(6)" . shorten 100
+     , ppSep     = " "
+     , ppWsSep   = ""
+     }
+  where
+    pad = wrap "^p(6)" "^p(6)"
 -- }}}
 
 -- Prompt Settings {{{
-pXPConfig :: XPConfig
 pXPConfig = defaultXPConfig
           { position    = Top
-          , font        = pFont2
-          , bgColor     = "#4C8EA1"
-          , fgColor     = "#131313"
-          , fgHLight    = "#B5B5B5"
-          , bgHLight    = "#131313"
+          , font        = pFont3
+          , bgColor     = "#323333"
+          , fgColor     = "#B1B1B1"
+          , fgHLight    = "#DE8C19"
+          , bgHLight    = "#323333"
           , promptBorderWidth = 0
           , historyFilter = deleteConsecutive
           }
 -- }}}
 
--- Workspaces & Layouts {{{
+-- Workspace Layouts {{{
 pWorkspaces = ["Code", "Web", "Media", "Util", "Misc"]
-pLayout = onWorkspace "Code" (gap threecol)
+pLayout = onWorkspace "Code" (gap tricol)
         $ onWorkspace "Media" full
-        $ gap (Mirror tiled) ||| gap tiled ||| nogap
+        $ gap (Mirror tiled ||| tiled) ||| full
   where
-    tiled    = named "Tall" $ spacing 3 $ ResizableTall 1 (1/100) (3/4) []
-    threecol = named "ThreeCol" $ spacing 3 $ ThreeCol 1 (3/100) (1/3)
-    gap      = gaps [(D,21), (U,3), (L,3), (R,3)]
-    nogap    = avoidStruts $ smartBorders Full
-    full     = smartBorders Full
+    named' n l = named n $ spacing 3 l
+    tiled      = named' "Tall" $ ResizableTall 1 (1/100) (3/4) []
+    tricol     = named' "TriCol" $ ThreeCol 1 (1/100) (1/3)
+    gap        = gaps [(D,3), (U,3), (L,3), (R,3)]
+    full       = smartBorders Full
 -- }}}
 
 -- Hooks {{{
 pManageHook = composeAll . concat $
   [ [ isFullscreen --> doFloat ]
-  , [ className =? c --> placeHook (fixed (0.5,0.5)) <+> doFloat | c <- cFloats ]
+  , [ className =? c --> doCenterFloat | c <- cFloats ]
   , [ title     =? t --> doFloat | t <- tFloats ]
   , [ className =? "MPlayer" --> doF (W.shift "Media") ]
+  , [ resource  =? "irc"      --> doF (W.shift "Web") ]
   , [ resource  =? "rtorrent" --> doF (W.shift "Util") ]
   , [ resource  =? "ncmpc"    --> doF (W.shift "Util") ]
-  , [ className =? "XCalc" --> placeHook (fixed (1,0.5)) <+> doFloat ]
-  , [ resource  =? "popTerm"  --> placeHook (fixed (0.5,0.5)) <+> doFloat ]
+  , [ resource  =? "popTerm"  --> doCenterFloat]
   ]
   where
     cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer", "Gimp" ]
     tFloats = ["Downloads", "-$> codetest" ]
 -- }}}
 
--- Key Bindings {{{
+-- Keys {{{
+toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
 pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-    -- launching and killing programs
-    [ ((modMask .|. shiftMask, xK_t         ), spawn $ XMonad.terminal conf) -- %! Launch terminal
-    , ((modMask,               xK_p         ), shellPrompt pXPConfig) -- Open shell prompt
-    , ((modMask .|. shiftMask, xK_p         ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
-    , ((modMask .|. shiftMask, xK_c         ), kill) -- %! Close the focused window
-    , ((modMask .|. shiftMask, xK_v         ), spawn "urxvtc -e vim")
-    , ((modMask .|. shiftMask, xK_w         ), spawn "firefox")
-    , ((modMask .|. shiftMask, xK_m         ), spawn "xterm")
---    , ((modMask,               xK_b         ), withFocused toggleBorder )
-    , ((modMask,               xK_Print     ), spawn "scrot ~/Pictures/Screenshots/%y%m%d_%H-%M-%S.png")
---    , ((0,                     xK_Menu      ), shellPrompt pXPConfig)
-    , ((0, 0x1008ff14                       ), spawn "mpc toggle")
---    , ((0, 0x1008ff2f                       ), )
---    , ((0, 0x1008ff2a                       ), )
-    , ((modMask,               xK_space     ), sendMessage NextLayout) -- %! Rotate through the available layout algorithms
-    , ((modMask .|. shiftMask, xK_space     ), setLayout $ XMonad.layoutHook conf) -- %!  Reset the layouts on the current workspace to default
-    , ((modMask,               xK_n         ), refresh) -- %! Resize viewed windows to the correct size
+  -- apps
+  [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf)
+  , ((modMask,               xK_p     ), shellPrompt pXPConfig)
+  , ((modMask .|. shiftMask, xK_p     ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
+  , ((modMask .|. shiftMask, xK_v     ), spawn "urxvtc -e vim")
+  , ((modMask .|. shiftMask, xK_w     ), spawn "firefox")
+  , ((modMask,               xK_Print ), spawn "scrot ~/Pictures/Screenshots/%y%m%d_%H%M%S.png")
+  , ((modMask .|. shiftMask, xK_c     ), kill)
 
-    -- move focus up or down the window stack
-    , ((modMask,               xK_Tab   ), windows W.focusDown) -- %! Move focus to the next window
-    , ((modMask,               xK_j     ), windows W.focusDown) -- %! Move focus to the next window
-    , ((modMask,               xK_k     ), windows W.focusUp  ) -- %! Move focus to the previous window
-    , ((modMask,               xK_m     ), windows W.focusMaster  ) -- %! Move focus to the master window
+  -- mpd
+  , ((0, 0x1008ff14                   ), spawn "mpc toggle")
+  , ((modMask .|. controlMask,  xK_h  ), spawn "mpc toggle")
+  , ((modMask .|. controlMask,  xK_j  ), spawn "mpc prev")
+  , ((modMask .|. controlMask,  xK_k  ), spawn "mpc next")
 
-    -- mpd controls
-    , ((modMask .|. controlMask,  xK_h     ), spawn "mpc prev")
-    , ((modMask .|. controlMask,  xK_t     ), spawn "mpc pause")
-    , ((modMask .|. controlMask,  xK_n     ), spawn "mpc play")
-    , ((modMask .|. controlMask,  xK_s     ), spawn "mpc next")
+  -- layouts
+  , ((modMask,               xK_space ), sendMessage NextLayout)
+  , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+  , ((modMask,               xK_n     ), refresh)
 
-    , ((modMask .|. controlMask,  xK_g     ), spawn "mpc seek -2%")
-    , ((modMask .|. controlMask,  xK_c     ), spawn "mpc volume -5")
-    , ((modMask .|. controlMask,  xK_r     ), spawn "mpc volume +5")
-    , ((modMask .|. controlMask,  xK_l     ), spawn "mpc seek +2%")
+  -- focus
+  , ((modMask,               xK_Tab   ), windows W.focusDown)
+  , ((modMask,               xK_j     ), windows W.focusDown)
+  , ((modMask,               xK_k     ), windows W.focusUp)
+  , ((modMask,               xK_m     ), windows W.focusMaster)
 
+  -- ordering
+  , ((modMask .|. shiftMask, xK_m     ), windows W.swapMaster)
+  , ((modMask .|. shiftMask, xK_j     ), windows W.swapDown  )
+  , ((modMask .|. shiftMask, xK_k     ), windows W.swapUp    )
 
-    -- modifying the window order
-    , ((modMask,               xK_Return), windows W.swapMaster) -- %! Swap the focused window and the master window
-    , ((modMask .|. shiftMask, xK_j     ), windows W.swapDown  ) -- %! Swap the focused window with the next window
-    , ((modMask .|. shiftMask, xK_k     ), windows W.swapUp    ) -- %! Swap the focused window with the previous window
+  -- resizing
+  , ((modMask,               xK_h     ), sendMessage Shrink)
+  , ((modMask,               xK_l     ), sendMessage Expand)
+  , ((modMask .|. shiftMask, xK_h     ), sendMessage MirrorShrink)
+  , ((modMask .|. shiftMask, xK_l     ), sendMessage MirrorExpand)
 
-    -- resizing the master/slave ratio
-    , ((modMask,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
-    , ((modMask,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+  -- floating layer support
+  , ((modMask,               xK_t     ), withFocused $ windows . W.sink)
 
-    , ((modMask .|. shiftMask, xK_h     ), sendMessage MirrorShrink)
-    , ((modMask .|. shiftMask, xK_l     ), sendMessage MirrorExpand)
+  -- +/- master windows
+  , ((modMask              , xK_comma ), sendMessage (IncMasterN 1))
+  , ((modMask              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- floating layer support
-    , ((modMask,               xK_t     ), withFocused $ windows . W.sink) -- %! Push window back into tiling
-
-    -- increase or decrease number of windows in the master area
-    , ((modMask              , xK_comma ), sendMessage (IncMasterN 1)) -- %! Increment the number of windows in the master area
-    , ((modMask              , xK_period), sendMessage (IncMasterN (-1))) -- %! Deincrement the number of windows in the master area
-
-    -- quit, or restart
-    , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess)) -- %! Quit xmonad
-    , ((modMask              , xK_q     ), restart "xmonad" True) -- %! Restart xmonad
-    ]
-    ++
-    -- mod-[1..9] %! Switch to workspace N
-    -- mod-shift-[1..9] %! Move client to workspace N
-    [((m .|. modMask, k), windows $ f i)
+  -- quit, or restart
+  , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+  , ((modMask              , xK_q     ), restart "xmonad" True)
+  ]
+  ++
+  -- mod-[1..9] %! Switch to workspace N
+  -- mod-shift-[1..9] %! Move client to workspace N
+  [((m .|. modMask, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
-    -- mod-{a,o} %! Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{a,o} %! Move client to screen 1, 2, or 3
-    [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  ++
+  -- mod-{a,o} %! Switch to physical/Xinerama screens 1, 2, or 3
+  -- mod-shift-{a,o} %! Move client to screen 1, 2, or 3
+  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_a, xK_o] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 -- }}}

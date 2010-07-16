@@ -22,17 +22,17 @@ if version >= 700
 endif
 
 " General colors
-hi Cursor       guifg=NONE    guibg=#656565 gui=none
-hi Normal       guifg=#f6f3e8 guibg=#242424 gui=none
-hi NonText      guifg=#808080 guibg=#242424 gui=none
-hi LineNr       guifg=#857b6f guibg=#141414 gui=none
-hi StatusLine   guifg=#f6f3e8 guibg=#141414 gui=none
+hi Cursor       guifg=NONE    guibg=#dfdb2f gui=none
+hi Normal       guifg=#f6f3e8 guibg=#131313 gui=none
+hi NonText      guifg=#808080 guibg=#131313 gui=none
+hi LineNr       guifg=#857b6f guibg=#242424 gui=none
+hi StatusLine   guifg=#c2e1e6 guibg=#242424 gui=none
 hi StatusLineNC guifg=#857b6f guibg=#444444 gui=none
 hi VertSplit    guifg=#444444 guibg=#444444 gui=none
 hi Folded       guibg=#384048 guifg=#a0a8b0 gui=none
-hi Title		    guifg=#f6f3e8 guibg=NONE	gui=none
-hi Visual		    guifg=#f6f3e8 guibg=#444444 gui=none
-hi SpecialKey	  guifg=#808080 guibg=#343434 gui=none
+hi Title        guifg=#f6f3e8 guibg=NONE    gui=none
+hi Visual       guifg=#f6f3e8 guibg=#444444 gui=none
+hi SpecialKey   guifg=#808080 guibg=#343434 gui=none
 hi Search       guifg=#232323 guibg=#95e454 gui=none
 
 " Syntax highlighting
@@ -46,6 +46,6 @@ hi Type         guifg=#cae682 gui=none
 hi Statement    guifg=#8ac6f2 gui=none
 hi Keyword      guifg=#8ac6f2 gui=none
 hi PreProc      guifg=#e5786d gui=none
-hi Number		guifg=#e5786d gui=none
-hi Special		guifg=#e7f6da gui=none
+hi Number       guifg=#e5786d gui=none
+hi Special      guifg=#e7f6da gui=none
 

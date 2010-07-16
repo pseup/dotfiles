@@ -107,3 +107,4 @@ ia reutrn return
 " Highlight Redundant Whitespace
 hi RedundantSpaces guibg=#303030
 match RedundantSpaces /\s\+$\| \+\ze\t/
+

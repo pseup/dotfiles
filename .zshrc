@@ -10,7 +10,7 @@ HISTSIZE=2000
 SAVEHIST=2000
 
 # Prompt
-PROMPT=$'[%{\e[1;32m%}%n%{\e[0m%}][%{\e[0;36m%}%~%{\e[0m%}] %{\e[1;32m%}>> %{\e[0m%}'
+PROMPT=$'[%{\e[32m%}%n%{\e[0m%}][%{\e[36m%}%~%{\e[0m%}] %{\e[32m%}>> %{\e[0m%}'
 #PROMPT=$'%{\e[42m%}%{\e[1;30m%} %n %{\e[47m%}%{\e[1;30m%} %~ %{\e[0m%}%{\e[1;30m%}%{\e[42m%} >> %{\e[0m%} '
 
 
@@ -58,7 +58,7 @@ alias mv="mv -v"
 alias rm="rm -v"
 alias grep="grep --color=auto"
 alias ncmpc="ncmpcpp"
-alias irc="irssi"
+alias irc="weechat-curses"
 
 # Extensions
 alias -s gif="feh"
@@ -66,6 +66,7 @@ alias -s jpg="feh"
 alias -s png="feh"
 alias -s avi="mplayer"
 alias -s flv="mplayer"
+alias -s mkv="mplayer"
 alias -s mp4="mplayer"
 
 # }}}
@@ -113,10 +114,13 @@ bindkey '^[[6~' down-line-or-history
 bindkey '^[[A' up-line-or-search
 bindkey '^[[D' backward-char
 bindkey '^[[B' down-line-or-search
-bindkey '^[[C' forward-char 
+bindkey '^[[C' forward-char
 # for rxvt
 bindkey "\e[8~" end-of-line
 bindkey "\e[7~" beginning-of-line
+
+bindkey "^[Od" backward-word
+bindkey "^[Oc" forward-word
 
 # }}}
 # ------------------------------
