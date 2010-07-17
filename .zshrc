@@ -59,6 +59,8 @@ alias rm="rm -v"
 alias grep="grep --color=auto"
 alias ncmpc="ncmpcpp"
 alias irc="weechat-curses"
+alias vim="vim -p"
+alias gvim="gvim -p"
 
 # Extensions
 alias -s gif="feh"

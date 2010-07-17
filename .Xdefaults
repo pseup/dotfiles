@@ -63,13 +63,14 @@ URxvt*depth: 24
 URxvt*background: [96]#131313
 URxvt*foreground: #A9A9A9
 
-popTerm*background: [96]#212121
-
 URxvt*title:      >
 URxvt*geometry:   84x25
-URxvt*saveLines:  5000
+URxvt*saveLines:  10000
 URxvt*scrollBar:  false
 URxvt*visualBell: false
 URxvt*urgentOnBell: true
+
+
+popTerm*background: [96]#212121
 
 # }}}

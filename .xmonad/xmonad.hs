@@ -116,9 +116,10 @@ pLayout = onWorkspace "Code" (gap tricol)
 
 -- Hooks {{{
 pManageHook = composeAll . concat $
-  [ [ isFullscreen --> doFloat ]
-  , [ className =? c --> doCenterFloat | c <- cFloats ]
+  [ [ isDialog --> doFloat ]
+  , [ isFullscreen --> doFullFloat ]
   , [ title     =? t --> doFloat | t <- tFloats ]
+  , [ className =? c --> doCenterFloat | c <- cFloats ]
   , [ className =? "MPlayer" --> doF (W.shift "Media") ]
   , [ resource  =? "irc"      --> doF (W.shift "Web") ]
   , [ resource  =? "rtorrent" --> doF (W.shift "Util") ]

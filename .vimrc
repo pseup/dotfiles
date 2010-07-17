@@ -11,7 +11,7 @@ set ic
 set title
 let &titleold=">"
 set wildmenu
-set wildmode=longest:full,full
+set wildmode=list:longest,full
 
 " Display
 " colorscheme wombat_cli
@@ -71,14 +71,15 @@ if has("autocmd")
 endif " has("autocmd")
 
 " Status line
-fun! <SID>SetStatusLine()
-    let l:s1="%-3.3n\\ %f\\ %h%m%r%w"
-    let l:s2="[%{strlen(&filetype)?&filetype:'?'},%{&encoding},%{&fileformat}]"
-    let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
-    execute "set statusline=" . l:s1 . l:s2 . l:s3
-endfun
+"fun! <SID>SetStatusLine()
+"    let l:s1="%-3.3n\\ %f\\ %h%m%r%w"
+"    let l:s2="[%{strlen(&filetype)?&filetype:'?'},%{&encoding},%{&fileformat}]"
+"    let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
+"    execute "set statusline=" . l:s1 . l:s2 . l:s3
+"endfun
+set statusline=%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
-call <SID>SetStatusLine()
+"call <SID>SetStatusLine()
 
 " C file options
 au FileType c,cpp set cindent
@@ -92,17 +93,6 @@ au FileType python set omnifunc=pythoncomplete#Complete
 " Compile and run keymappings
 au FileType python map <F6> :!python %<CR>
 au FileType lua map <F6> :!lua %<CR>
-
-" Prevent annoying typos
-imap <F1> <esc>
-nmap q: :q<CR>
-ia htis this
-ia tihs this
-ia funciton function
-ia funtion function
-ia fucntion function
-ia retunr return
-ia reutrn return
 
 " Highlight Redundant Whitespace
 hi RedundantSpaces guibg=#303030
