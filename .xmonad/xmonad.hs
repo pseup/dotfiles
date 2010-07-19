@@ -7,6 +7,7 @@ import XMonad
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
+import System.IO
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
@@ -72,7 +73,7 @@ dzPP = defaultPP
      { ppCurrent = dzenColor "#131313" "#3A78C8" . pad
      , ppHidden  = pad
      , ppHiddenNoWindows = dzenColor "#555555" "" . pad
-     , ppUrgent  = dzenColor "#AE3232" "" . pad
+     , ppUrgent  = dzenColor "#AE3232" "". pad
      , ppLayout  = (\x -> case x of
                      "Tall"        -> "^i(" ++ pIconDir ++ "/tileright.xbm)"
                      "Mirror Tall" -> "^i(" ++ pIconDir ++ "/tilebottom.xbm)"
@@ -80,7 +81,7 @@ dzPP = defaultPP
                      "TriCol"      -> "^i(" ++ pIconDir ++ "/threecol.xbm)"
                      _             -> "^i(" ++ pIconDir ++ "/unknown.xbm)"
                      )
-     , ppTitle   = wrap "^p(6)" "^p(6)" . shorten 100
+     , ppTitle   = pad . shorten 100
      , ppSep     = " "
      , ppWsSep   = ""
      }

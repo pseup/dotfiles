@@ -6,71 +6,59 @@ Xft.hintstyle: hintsfull
 Xft.antialias: true
 Xft.rgba: rgb
 
-Xcursor*theme: Vanilla-DMZ
-Xcursor*size: 16
+Xcursor.theme: Vanilla-DMZ
+Xcursor.size: 16
 
 # }}}
 # COLORS {{{
-!black
-*color0: #454545
-*color8: #222222
-!red
-*color1: #9E5641
-*color9: #CC896D
-!green
-!*color2: #6C7E55
-*color10: #7DB37D
-!yellow
-!*color3: #CAAF2B
-!*color11: #BFB556
-!blue
-!*color4: #7C9AA6
-!*color12: #8FADBF
-!magenta
-!*color5: #956D9D
-!*color13: #C18FCB
-!cyan
-*color6: #4c8ea1
-*color14: #6bc1d0
-!white
-!*color7: #D0D0D0
-!*color15: #B5B5B5
 
-!*color0:          #404040
-!*color8:          #505050
-!*color1:          #D27E9D
-!*color9:          #FC6D7F
-*color2:          #C2D797
-!*color10:         #EDFFC9
-*color3:          #EFC666
-*color11:         #FFBD73
-*color4:          #94C7D7
-*color12:         #869AB1
-*color5:          #925372
-*color13:         #E165A1
-!*color6:          #93CAD7
-!*color14:         #93BAD7
-*color7:          #d2d2d2
-*color15:         #ffffff
+!Black
+*color0:  #454545
+*color8:  #222222
+!Red
+*color1:  #9E5641
+*color9:  #CC896D
+!Green
+*color2:  #C2D797
+*color10: #7DB37D
+!Yellow
+*color3:  #EFC666
+*color11: #FFBD73
+!Blue
+*color4:  #94C7D7
+*color12: #869AB1
+!Magenta
+*color5:  #925372
+*color13: #E165A1
+!Cyan
+*color6:  #4c8ea1
+*color14: #6bc1d0
+!White
+*color7:  #d2d2d2
+*color15: #ffffff
 
 # }}}
 # URXVT {{{
 
-URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt*boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt.boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
 
-URxvt*depth: 24
-URxvt*background: [96]#131313
-URxvt*foreground: #A9A9A9
+URxvt.depth: 24
+URxvt.background: [96]#131313
+URxvt.foreground: #A9A9A9
 
-URxvt*title:      >
-URxvt*geometry:   84x25
-URxvt*saveLines:  10000
-URxvt*scrollBar:  false
-URxvt*visualBell: false
-URxvt*urgentOnBell: true
+URxvt.title:      >
+URxvt.geometry:   84x25
+URxvt.saveLines:  10000
+URxvt.scrollBar:  false
+URxvt.visualBell: false
+URxvt.urgentOnBell: true
 
+!URxvt.tabbed.tabbar-bg: -1
+!URxvt.tabbed.tabbar-fg: 0
+!URxvt.tabbed.tab-bg: 0
+!URxvt.tabbed.tab-fg: 12
 
-popTerm*background: [96]#212121
+popTerm.background: [96]#212121
 
 # }}}

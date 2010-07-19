@@ -10,8 +10,6 @@ set tf
 set ic
 set title
 let &titleold=">"
-set wildmenu
-set wildmode=list:longest,full
 
 " Display
 " colorscheme wombat_cli
@@ -19,7 +17,7 @@ set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set showmatch   " highlight matching brackets
 set number      " line numbers
-set scrolloff=3 " keep n lines visible above cursor if possible
+set scrolloff=2 " keep n lines visible above cursor if possible
 
 " Formatting
 set autoindent
@@ -34,7 +32,7 @@ set backspace=indent,eol,start
 
 " Command
 set wildmenu
-"set wildmode=list:longest,full
+set wildmode=list:longest,full
 
 if has("gui_running")
     colorscheme wombat
@@ -70,16 +68,8 @@ if has("autocmd")
   augroup END
 endif " has("autocmd")
 
-" Status line
-"fun! <SID>SetStatusLine()
-"    let l:s1="%-3.3n\\ %f\\ %h%m%r%w"
-"    let l:s2="[%{strlen(&filetype)?&filetype:'?'},%{&encoding},%{&fileformat}]"
-"    let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
-"    execute "set statusline=" . l:s1 . l:s2 . l:s3
-"endfun
-set statusline=%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
+set statusline=\ %<%f\ %h%m%r%y\ [%{getcwd()}]%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
-"call <SID>SetStatusLine()
 
 " C file options
 au FileType c,cpp set cindent
@@ -98,3 +88,7 @@ au FileType lua map <F6> :!lua %<CR>
 hi RedundantSpaces guibg=#303030
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
+" Tabline Style
+hi TabLine     ctermbg=8    ctermfg=0   cterm=NONE
+hi TabLineSel  ctermbg=NONE ctermfg=4   cterm=NONE
+hi TabLineFill ctermbg=8    cterm=NONE
