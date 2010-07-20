@@ -41,7 +41,7 @@ Xcursor.size: 16
 # URXVT {{{
 
 URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt.boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+!URxvt.boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
 
 URxvt.depth: 24
 URxvt.background: [96]#131313

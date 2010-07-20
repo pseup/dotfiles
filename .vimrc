@@ -32,7 +32,8 @@ set backspace=indent,eol,start
 
 " Command
 set wildmenu
-set wildmode=list:longest,full
+"set wildmode=list:longest,full
+set wildmode=longest,list
 
 if has("gui_running")
     colorscheme wombat
@@ -89,6 +90,10 @@ hi RedundantSpaces guibg=#303030
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
 " Tabline Style
-hi TabLine     ctermbg=8    ctermfg=0   cterm=NONE
-hi TabLineSel  ctermbg=NONE ctermfg=4   cterm=NONE
-hi TabLineFill ctermbg=8    cterm=NONE
+hi TabLine     ctermbg=8     ctermfg=0     cterm=NONE
+hi TabLineSel  ctermbg=NONE  ctermfg=4     cterm=NONE
+hi TabLineFill ctermbg=8     cterm=NONE
+
+hi TabLine     guifg=#857b6f guibg=#323232 gui=none
+hi TabLineSel  guifg=#c2e1e6 guibg=#131313 gui=none
+hi TabLineFill guibg=#323232 gui=none

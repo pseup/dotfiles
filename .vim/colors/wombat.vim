@@ -49,8 +49,3 @@ hi PreProc      guifg=#e5786d gui=none
 hi Number       guifg=#e5786d gui=none
 hi Special      guifg=#e7f6da gui=none
 
-
-" Tabline
-hi TabLine      guifg=#857b6f guibg=#323232 gui=none
-hi TabLineSel   guifg=#c2e1e6 guibg=#131313 gui=none
-hi TabLineFill  guibg=#323232 gui=none

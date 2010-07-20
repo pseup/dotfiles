@@ -70,11 +70,12 @@ urgConfig = UrgencyConfig { suppressWhen = Focused
 
 -- dzen PP {{{
 dzPP = defaultPP
-     { ppCurrent = dzenColor "#131313" "#3A78C8" . pad
+     { ppCurrent = dzenColor "#131313" "#49AAE7" . pad
      , ppHidden  = pad
      , ppHiddenNoWindows = dzenColor "#555555" "" . pad
      , ppUrgent  = dzenColor "#AE3232" "". pad
-     , ppLayout  = (\x -> case x of
+     , ppLayout  = dzenColor "#555555" "" .
+                   (\x -> case x of
                      "Tall"        -> "^i(" ++ pIconDir ++ "/tileright.xbm)"
                      "Mirror Tall" -> "^i(" ++ pIconDir ++ "/tilebottom.xbm)"
                      "Full"        -> "^i(" ++ pIconDir ++ "/max.xbm)"
@@ -103,9 +104,9 @@ pXPConfig = defaultXPConfig
 -- }}}
 
 -- Workspace Layouts {{{
-pWorkspaces = ["Code", "Web", "Media", "Util", "Misc"]
-pLayout = onWorkspace "Code" (gap tricol)
-        $ onWorkspace "Media" full
+pWorkspaces = ["code", "web", "media", "util", "misc"]
+pLayout = onWorkspace "code" (gap tricol)
+        $ onWorkspace "media" full
         $ gap (Mirror tiled ||| tiled) ||| full
   where
     named' n l = named n $ spacing 3 l
@@ -121,10 +122,10 @@ pManageHook = composeAll . concat $
   , [ isFullscreen --> doFullFloat ]
   , [ title     =? t --> doFloat | t <- tFloats ]
   , [ className =? c --> doCenterFloat | c <- cFloats ]
-  , [ className =? "MPlayer" --> doF (W.shift "Media") ]
-  , [ resource  =? "irc"      --> doF (W.shift "Web") ]
-  , [ resource  =? "rtorrent" --> doF (W.shift "Util") ]
-  , [ resource  =? "ncmpc"    --> doF (W.shift "Util") ]
+  , [ className =? "MPlayer"  --> doF (W.shift "media") ]
+  , [ resource  =? "irc"      --> doF (W.shift "web") ]
+  , [ resource  =? "rtorrent" --> doF (W.shift "util") ]
+  , [ resource  =? "ncmpc"    --> doF (W.shift "util") ]
   , [ resource  =? "popTerm"  --> doCenterFloat]
   ]
   where
