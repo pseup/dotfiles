@@ -1,4 +1,4 @@
-# GENERAL {{{
+! GENERAL {{{
 
 Xft.dpi: 96
 Xft.hinting: true
@@ -9,8 +9,8 @@ Xft.rgba: rgb
 Xcursor.theme: Vanilla-DMZ
 Xcursor.size: 16
 
-# }}}
-# COLORS {{{
+! }}}
+! COLORS {{{
 
 !Black
 *color0:  #454545
@@ -37,11 +37,11 @@ Xcursor.size: 16
 *color7:  #d2d2d2
 *color15: #ffffff
 
-# }}}
-# URXVT {{{
+! }}}
+! URXVT {{{
 
 URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-!URxvt.boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt.boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
 URxvt.depth: 24
 URxvt.background: [96]#131313
@@ -61,4 +61,4 @@ URxvt.urgentOnBell: true
 
 popTerm.background: [96]#212121
 
-# }}}
+! }}}

@@ -92,12 +92,12 @@ dzPP = defaultPP
 
 -- Prompt Settings {{{
 pXPConfig = defaultXPConfig
-          { position    = Top
+          { position    = Bottom
           , font        = pFont3
-          , bgColor     = "#323333"
+          , bgColor     = "#131313"
           , fgColor     = "#B1B1B1"
-          , fgHLight    = "#DE8C19"
-          , bgHLight    = "#323333"
+          , fgHLight    = "#49AAE7"
+          , bgHLight    = "#131313"
           , promptBorderWidth = 0
           , historyFilter = deleteConsecutive
           }

@@ -27,15 +27,16 @@ hi Title ctermfg=7
 hi Visual ctermfg=7 ctermbg=238
 hi SpecialKey ctermfg=244 ctermbg=236
 " Syntax highlighting
-hi Comment ctermfg=246
-hi Todo ctermfg=245
-hi Constant ctermfg=173
-hi String ctermfg=113
+hi Comment    ctermfg=246
+hi Todo       ctermfg=245
+hi Constant   ctermfg=173
+hi String     ctermfg=113
 hi Identifier ctermfg=186
-hi Function ctermfg=186
-hi Type ctermfg=186
-hi Statement ctermfg=117
-hi Keyword ctermfg=117
-hi PreProc ctermfg=173
-hi Number ctermfg=173
-hi Special ctermfg=194
+hi Function   ctermfg=186
+hi Type       ctermfg=186
+hi Statement  ctermfg=117
+hi Keyword    ctermfg=117
+hi PreProc    ctermfg=173
+hi Number     ctermfg=173
+hi Special    ctermfg=194
+hi Search     ctermbg=none ctermfg=none cterm=reverse

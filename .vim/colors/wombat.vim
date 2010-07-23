@@ -33,7 +33,8 @@ hi Folded       guibg=#384048 guifg=#a0a8b0 gui=none
 hi Title        guifg=#f6f3e8 guibg=NONE    gui=none
 hi Visual       guifg=#f6f3e8 guibg=#444444 gui=none
 hi SpecialKey   guifg=#808080 guibg=#343434 gui=none
-hi Search       guifg=#232323 guibg=#95e454 gui=none
+hi Search       guifg=NONE    guibg=NONE    gui=reverse
+"guifg=#232323 guibg=#95e454 gui=none
 
 " Syntax highlighting
 hi Comment      guifg=#99968b gui=none
