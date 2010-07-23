@@ -120,17 +120,17 @@ pLayout = onWorkspace "code" (gap tricol)
 pManageHook = composeAll . concat $
   [ [ isDialog --> doFloat ]
   , [ isFullscreen --> doFullFloat ]
-  , [ title     =? t --> doFloat | t <- tFloats ]
   , [ className =? c --> doCenterFloat | c <- cFloats ]
   , [ className =? "MPlayer"  --> doF (W.shift "media") ]
   , [ resource  =? "irc"      --> doF (W.shift "web") ]
   , [ resource  =? "rtorrent" --> doF (W.shift "util") ]
   , [ resource  =? "ncmpc"    --> doF (W.shift "util") ]
-  , [ resource  =? "popTerm"  --> doCenterFloat]
+  , [ className =? "Gimp"     --> doFloat ]
+  , [ resource  =? "popTerm"  --> doCenterFloat ]
+  , [ title     =? "-$>>"     --> doCenterFloat ]
   ]
   where
-    cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer", "Gimp" ]
-    tFloats = ["Downloads", "-$> codetest" ]
+    cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer"]
 -- }}}
 
 -- Keys {{{
@@ -192,10 +192,4 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-  ++
-  -- mod-{a,o} %! Switch to physical/Xinerama screens 1, 2, or 3
-  -- mod-shift-{a,o} %! Move client to screen 1, 2, or 3
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_a, xK_o] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 -- }}}
