@@ -82,8 +82,8 @@ au FileType cpp set omnifunc=cppcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
 
 " Compile and run keymappings
-au FileType python map <F6> :!python %<CR>
-au FileType lua map <F6> :!lua %<CR>
+au FileType python map <F5> :!clear && python %<CR>
+au FileType lua map <F5> :!lua %<CR>
 
 " Highlight Redundant Whitespace
 hi RedundantSpaces guibg=#303030

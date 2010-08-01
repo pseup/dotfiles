@@ -9,6 +9,9 @@ import qualified Data.Map as M
 import System.Exit
 import System.IO
 
+import XMonad.Actions.NoBorders
+
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
@@ -30,29 +33,27 @@ pTerm       = "urxvtc"
 pModMask    = mod4Mask
 pBorder     = 3
 pNormColor  = "#131313"
-pFocusColor = "#131313"
+pFocusColor = "#1677B4"
 
 pIconDir = "/home/pseup/.xmonad/icons/"
 pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
 pFont2   = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
 pFont3   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
 
-dzenOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313' -e 'onstart=lower'"
-dzenWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzenOptions
+dzOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313' -e 'onstart=lower'"
+dzWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzOptions
 -- }}}
 
 -- Main {{{
-main = xmonad =<< statusBar cmd pp kb conf
+main = xmonad =<< statusBar dzWorkspaces dzPP kb conf
   where
     uhook = withUrgencyHookC NoUrgencyHook urgConfig
-    cmd   = dzenWorkspaces
-    pp    = dzPP
     kb    = toggleStrutsKey
     conf  = uhook myConfig
 -- }}}
 
 -- Config {{{
-myConfig = defaultConfig { workspaces = pWorkspaces
+myConfig = ewmh defaultConfig { workspaces = pWorkspaces
                          , layoutHook = pLayout
                          , manageHook = pManageHook
                          , borderWidth = pBorder
@@ -74,7 +75,7 @@ dzPP = defaultPP
      , ppHidden  = pad
      , ppHiddenNoWindows = dzenColor "#555555" "" . pad
      , ppUrgent  = dzenColor "#AE3232" "". pad
-     , ppLayout  = dzenColor "#555555" "" .
+     , ppLayout  = dzenColor "#49AAE7" "" .
                    (\x -> case x of
                      "Tall"        -> "^i(" ++ pIconDir ++ "/tileright.xbm)"
                      "Mirror Tall" -> "^i(" ++ pIconDir ++ "/tilebottom.xbm)"
@@ -127,7 +128,7 @@ pManageHook = composeAll . concat $
   , [ resource  =? "ncmpc"    --> doF (W.shift "util") ]
   , [ className =? "Gimp"     --> doFloat ]
   , [ resource  =? "popTerm"  --> doCenterFloat ]
-  , [ title     =? "-$>>"     --> doCenterFloat ]
+  , [ title     =? "-$>>"     --> doFloat ]
   ]
   where
     cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer"]
@@ -144,7 +145,7 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_p     ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
   , ((modMask .|. shiftMask, xK_v     ), spawn "urxvtc -e vim")
   , ((modMask .|. shiftMask, xK_w     ), spawn "firefox")
-  , ((modMask,               xK_Print ), spawn "scrot ~/Pictures/Screenshots/%y%m%d_%H%M%S.png")
+  , ((modMask,               xK_Print ), spawn "~/Scripts/scrshot.sh")
   , ((modMask .|. shiftMask, xK_c     ), kill)
 
   -- mpd
@@ -157,6 +158,7 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask,               xK_space ), sendMessage NextLayout)
   , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
   , ((modMask,               xK_n     ), refresh)
+  , ((modMask .|. shiftMask, xK_b     ), withFocused toggleBorder)
 
   -- focus
   , ((modMask,               xK_Tab   ), windows W.focusDown)
