@@ -9,20 +9,18 @@ import qualified Data.Map as M
 import System.Exit
 import System.IO
 
-import XMonad.Actions.NoBorders
-
-import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 
 import XMonad.Layout.Gaps
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
-import XMonad.Layout.ThreeColumns
 import XMonad.Layout.PerWorkspace ( onWorkspace )
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
+import XMonad.Layout.ThreeColumns
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -54,15 +52,15 @@ main = xmonad =<< statusBar dzWorkspaces dzPP kb conf
 
 -- Config {{{
 myConfig = ewmh defaultConfig { workspaces = pWorkspaces
-                         , layoutHook = pLayout
-                         , manageHook = pManageHook
-                         , borderWidth = pBorder
-                         , normalBorderColor  = pNormColor
-                         , focusedBorderColor = pFocusColor
-                         , terminal = pTerm
-                         , modMask = pModMask
-                         , keys = pKeys
-                         }
+                              , layoutHook = pLayout
+                              , manageHook = pManageHook
+                              , borderWidth = pBorder
+                              , normalBorderColor  = pNormColor
+                              , focusedBorderColor = pFocusColor
+                              , terminal = pTerm
+                              , modMask = pModMask
+                              , keys = pKeys
+                              }
 
 
 urgConfig = UrgencyConfig { suppressWhen = Focused
@@ -142,7 +140,7 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- apps
   [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf)
   , ((modMask,               xK_p     ), shellPrompt pXPConfig)
-  , ((modMask .|. shiftMask, xK_p     ), spawn "urxvtc -name \"popTerm\" -geometry 84x8")
+  , ((modMask .|. shiftMask, xK_p     ), spawn "urxvtc -name \"popTerm\"")
   , ((modMask .|. shiftMask, xK_v     ), spawn "urxvtc -e vim")
   , ((modMask .|. shiftMask, xK_w     ), spawn "firefox")
   , ((modMask,               xK_Print ), spawn "~/Scripts/scrshot.sh")
@@ -158,7 +156,6 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask,               xK_space ), sendMessage NextLayout)
   , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
   , ((modMask,               xK_n     ), refresh)
-  , ((modMask .|. shiftMask, xK_b     ), withFocused toggleBorder)
 
   -- focus
   , ((modMask,               xK_Tab   ), windows W.focusDown)

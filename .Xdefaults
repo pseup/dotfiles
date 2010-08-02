@@ -1,13 +1,13 @@
 ! GENERAL {{{
 
-Xft.dpi: 96
-Xft.hinting: true
-Xft.hintstyle: hintsfull
-Xft.antialias: true
-Xft.rgba: rgb
+Xft*dpi: 96
+Xft*hinting: true
+Xft*hintstyle: hintsfull
+Xft*antialias: true
+Xft*rgba: rgb
 
-Xcursor.theme: Vanilla-DMZ
-Xcursor.size: 16
+Xcursor*theme: Vanilla-DMZ
+Xcursor*size: 16
 
 ! }}}
 ! COLORS {{{
@@ -48,7 +48,7 @@ URxvt.background: [96]#131313
 URxvt.foreground: #A9A9A9
 
 URxvt.title:      >
-URxvt.geometry:   84x25
+URxvt.geometry:   84x24
 URxvt.saveLines:  10000
 URxvt.scrollBar:  false
 URxvt.visualBell: false
@@ -60,5 +60,6 @@ URxvt.urgentOnBell: true
 !URxvt.tabbed.tab-fg: 12
 
 popTerm.background: [96]#212121
+popTerm.geometry: 84x8
 
 ! }}}
