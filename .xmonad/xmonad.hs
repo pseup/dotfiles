@@ -65,7 +65,7 @@ myConfig = ewmh defaultConfig { workspaces = pWorkspaces
 
 -- dzen PP {{{
 dzPP = defaultPP
-     { ppCurrent = dzenColor "#131313" "#BCC2AD" . pad  --dzenColor "#131313" "#49AAE7" . pad
+     { ppCurrent = dzenColor "#131313" "#49AAE7" . pad
      , ppHidden  = pad
      , ppHiddenNoWindows = dzenColor "#4B5457" "" . pad
      , ppUrgent  = dzenColor "#AE3232" "". pad
