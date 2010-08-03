@@ -40,26 +40,26 @@ Xcursor*size: 16
 ! }}}
 ! URXVT {{{
 
-URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt.boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
-URxvt.depth: 24
-URxvt.background: [96]#131313
-URxvt.foreground: #A9A9A9
+URxvt*depth: 24
+URxvt*background: [96]#131313
+URxvt*foreground: #A9A9A9
 
-URxvt.title:      >
-URxvt.geometry:   84x24
-URxvt.saveLines:  10000
-URxvt.scrollBar:  false
-URxvt.visualBell: false
-URxvt.urgentOnBell: true
+URxvt*title:      >
+URxvt*geometry:   84x24
+URxvt*saveLines:  10000
+URxvt*scrollBar:  false
+URxvt*visualBell: false
+URxvt*urgentOnBell: true
 
-!URxvt.tabbed.tabbar-bg: -1
-!URxvt.tabbed.tabbar-fg: 0
-!URxvt.tabbed.tab-bg: 0
-!URxvt.tabbed.tab-fg: 12
+!URxvt*tabbed.tabbar-bg: -1
+!URxvt*tabbed.tabbar-fg: 0
+!URxvt*tabbed.tab-bg: 0
+!URxvt*tabbed.tab-fg: 12
 
-popTerm.background: [96]#212121
-popTerm.geometry: 84x8
+popTerm*background: [96]#212121
+popTerm*geometry: 84x8
 
 ! }}}

@@ -38,16 +38,16 @@ pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
 pFont2   = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
 pFont3   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
 
-dzOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#B5B5B5' -bg '#131313' -e 'onstart=lower'"
+dzOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#BCC2AD' -bg '#131313' -e 'onstart=lower'"
 dzWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzOptions
 -- }}}
 
 -- Main {{{
 main = xmonad =<< statusBar dzWorkspaces dzPP kb conf
   where
-    uhook = withUrgencyHookC NoUrgencyHook urgConfig
-    kb    = toggleStrutsKey
+    uhook = withUrgencyHook NoUrgencyHook
     conf  = uhook myConfig
+    kb    = toggleStrutsKey
 -- }}}
 
 -- Config {{{
@@ -61,17 +61,13 @@ myConfig = ewmh defaultConfig { workspaces = pWorkspaces
                               , modMask = pModMask
                               , keys = pKeys
                               }
-
-
-urgConfig = UrgencyConfig { suppressWhen = Focused
-                          , remindWhen   = Dont }
 -- }}}
 
 -- dzen PP {{{
 dzPP = defaultPP
-     { ppCurrent = dzenColor "#131313" "#49AAE7" . pad
+     { ppCurrent = dzenColor "#131313" "#BCC2AD" . pad  --dzenColor "#131313" "#49AAE7" . pad
      , ppHidden  = pad
-     , ppHiddenNoWindows = dzenColor "#555555" "" . pad
+     , ppHiddenNoWindows = dzenColor "#4B5457" "" . pad
      , ppUrgent  = dzenColor "#AE3232" "". pad
      , ppLayout  = dzenColor "#49AAE7" "" .
                    (\x -> case x of

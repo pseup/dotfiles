@@ -37,7 +37,7 @@ set wildmode=longest,list
 
 if has("gui_running")
     colorscheme wombat
-    set guifont=Profont\ 10
+    set guifont=Terminus\ 8
     set guioptions=m
     set guicursor=a:blinkon0
     set columns=86
