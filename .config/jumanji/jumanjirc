@@ -1,0 +1,36 @@
+# vim: ft=conf
+
+set homepage file:///home/pseup/.config/jumanji/blank.htm
+#set stylesheet file:///home/pseup/.config/jumanji/ssl.scroogle.org.css
+
+# Search Engines
+searchengine google https://ssl.scroogle.org/cgi-bin/nbbwssl.cgi?Gw=%s
+searchengine dictionary http://dictionary.reference.com/browse/%s
+searchengine thesaurus http://thesaurus.reference.com/browse/%s
+searchengine imdb http://www.imdb.com/find?s=all&q=%s
+searchengine wikipedia https://secure.wikimedia.org/wikipedia/en/w/index.php?search=%s
+
+
+# Style
+set font Terminus normal 8
+
+set completion_bgcolor #131313
+set completion_fgcolor #B5B5B5
+set completion_g_bgcolor #292929
+set completion_g_fgcolor #3A78C8
+set completion_hl_bgcolor #3A78C8
+set completion_hl_fgcolor #131313
+
+set statusbar_bgcolor #131313
+set statusbar_fgcolor #969AB1
+set statusbar_ssl_bgcolor #CAE682
+set statusbar_ssl_fgcolor #131313
+
+set tabbar_bgcolor #131313
+set tabbar_fgcolor #B5B5B5
+set tabbar_focus_bgcolor #131313
+set tabbar_focus_fgcolor #869AB1
+set tabbar_separator_color #131313
+
+# Scripts
+script ~/.config/jumanji/scripts/dwb2_hints.js
