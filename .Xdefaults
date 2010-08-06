@@ -12,28 +12,28 @@ Xcursor*size: 16
 ! }}}
 ! COLORS {{{
 
-!Black
+! Black
 *color0:  #454545
 *color8:  #222222
-!Red
+! Red
 *color1:  #9E5641
 *color9:  #CC896D
-!Green
+! Green
 *color2:  #C2D797
 *color10: #7DB37D
-!Yellow
+! Yellow
 *color3:  #EFC666
-*color11: #FFBD73
-!Blue
+*color11: #DADE69
+! Blue
 *color4:  #94C7D7
 *color12: #869AB1
-!Magenta
+! Magenta
 *color5:  #925372
 *color13: #E165A1
-!Cyan
+! Cyan
 *color6:  #4c8ea1
 *color14: #6bc1d0
-!White
+! White
 *color7:  #d2d2d2
 *color15: #ffffff
 
