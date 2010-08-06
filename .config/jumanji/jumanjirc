@@ -1,7 +1,8 @@
-# vim: ft=conf
+#
+# jumanjirc
+#
 
 set homepage file:///home/pseup/.config/jumanji/blank.htm
-#set stylesheet file:///home/pseup/.config/jumanji/ssl.scroogle.org.css
 
 # Search Engines
 searchengine google https://ssl.scroogle.org/cgi-bin/nbbwssl.cgi?Gw=%s
