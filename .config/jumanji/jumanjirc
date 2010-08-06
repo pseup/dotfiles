@@ -2,6 +2,7 @@
 # jumanjirc
 #
 
+# Homepage
 set homepage file:///home/pseup/.config/jumanji/blank.htm
 
 # Search Engines
@@ -10,7 +11,6 @@ searchengine dictionary http://dictionary.reference.com/browse/%s
 searchengine thesaurus http://thesaurus.reference.com/browse/%s
 searchengine imdb http://www.imdb.com/find?s=all&q=%s
 searchengine wikipedia https://secure.wikimedia.org/wikipedia/en/w/index.php?search=%s
-
 
 # Style
 set font Terminus normal 8
