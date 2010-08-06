@@ -1,3 +1,5 @@
+
+
 # ------------------------------
 # Options {{{
 
@@ -11,14 +13,21 @@ SAVEHIST=2000
 
 # Prompt
 PROMPT=$'[%{\e[32m%}%n%{\e[0m%}][%{\e[36m%}%~%{\e[0m%}] %{\e[32m%}>> %{\e[0m%}'
-#PROMPT=$'%{\e[42m%}%{\e[1;30m%} %n %{\e[47m%}%{\e[1;30m%} %~ %{\e[0m%}%{\e[1;30m%}%{\e[42m%} >> %{\e[0m%} '
 
+# UID specific cursor color
+if [[ $TERM != "linux" ]]; then
+  if [[ $UID -ge 1000 ]]; then # normal user
+    precmd () { print -n "\033]12;2\007" }
+  elif [[ $UID -eq 0 ]]; then # root
+    precmd () { print -n "\033]12;1\007" }
+  fi
+fi
 
 # Vars
 export EDITOR="vim"
 export PAGER="vimpager"
 alias less="$PAGER"
-export GREP_COLOR='1;32'
+export GREP_COLOR='34'
 LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=0;32:';
 export LS_COLORS
 
@@ -46,21 +55,19 @@ zstyle ':completion:*:killall:*'   force-list always
 # }}}
 # ------------------------------
 # Aliases {{{
+alias c='clear'
+alias cp='cp -v'
+alias grep='grep --color=auto'
+alias ll='ls --color --group -lh'
+alias ls='ls --color --group -F'
+alias mv='mv -v'
+alias rm='rm -v'
 
-# Normal
-alias pac="sudo pacman-color"
-alias emptytrash="rm ~/.local/share/Trash/files/*"
-alias c="clear"
-alias ls="ls --color --group -F"
-alias ll="ls --color --group -lh"
-alias cp="cp -v"
-alias mv="mv -v"
-alias rm="rm -v"
-alias grep="grep --color=auto"
-alias ncmpc="ncmpcpp"
-alias irc="weechat-curses"
-alias vim="vim -p"
-alias gvim="gvim -p"
+alias irc='weechat-curses'
+alias vim='vim -p'
+alias gvim='gvim -p'
+
+alias emptytrash='rm -r ~/.local/share/Trash/*'
 
 # Extensions
 alias -s gif="feh"
@@ -77,7 +84,7 @@ alias -s mp4="mplayer"
 
 # Download and make AUR package
 slurp() {
-  slurpy -d "$1" && cd "$1" && makepkg
+  cd ~/Packages && slurpy -d "$1" && cd "$1" && makepkg
 }
 
 # All in one archive extract
@@ -95,7 +102,7 @@ extract () {
       *.zip) unzip "$1" ;;
       *.Z) uncompress $1 ;;
       *.7z) 7z x $1 ;;
-      *) echo "'$1' cannot be extracted via extract()" ;;
+      *) echo "'$1', filetype unsupported by extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -104,7 +111,7 @@ extract () {
 
 # }}}
 # ------------------------------
-# Keybindings {{{
+# Key Bindings {{{
 
 bindkey -v
 typeset -g -A key
@@ -131,19 +138,7 @@ bindkey "^[Oc" forward-word
 
 # }}}
 # ------------------------------
-
-# UID Cursor Color Change in terms
-if [[ $TERM != "linux" ]]; then
-    precmd () {
-        if [[ $UID -ge 1000 ]]; then # normal user
-            print -n "\033]12;2\007"
-        elif [[ $UID -eq 0 ]]; then # root
-            print -n "\033]12;1\007"
-        fi
-    }
-fi
-
-# Set some nice Zenburn colors in TTY
+# TTY Colors {{{
 if [[ $TERM == "linux" ]]; then
     echo -en "\e]P01e2320" #zen-black (norm. black)
     echo -en "\e]P8709080" #zen-bright-black (norm. darkgrey)
@@ -162,3 +157,4 @@ if [[ $TERM == "linux" ]]; then
     echo -en "\e]P7dcdccc" #zen-white (norm. lightgrey)
     echo -en "\e]PFffffff" #zen-bright-white (norm. white)
 fi
+# }}}
