@@ -43,7 +43,7 @@ Xcursor*size: 16
 URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
-URxvt*depth: 24
+URxvt*depth: 32
 URxvt*background: [96]#131313
 URxvt*foreground: #A9A9A9
 

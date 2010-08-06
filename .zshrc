@@ -75,6 +75,11 @@ alias -s mp4="mplayer"
 # ------------------------------
 # Functions {{{
 
+# Download and make AUR package
+slurp() {
+  slurpy -d "$1" && cd "$1" && makepkg
+}
+
 # All in one archive extract
 extract () {
   if [ -f $1 ] ; then

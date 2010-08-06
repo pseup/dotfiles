@@ -31,7 +31,7 @@ pTerm       = "urxvtc"
 pModMask    = mod4Mask
 pBorder     = 3
 pNormColor  = "#131313"
-pFocusColor = "#1677B4"
+pFocusColor = "#131313" --"#1677B4"
 
 pIconDir = "/home/pseup/.xmonad/icons/"
 pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
@@ -83,6 +83,7 @@ dzPP = defaultPP
      }
   where
     pad = wrap "^p(6)" "^p(6)"
+
 -- }}}
 
 -- Prompt Settings {{{
@@ -142,8 +143,10 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask,               xK_Print ), spawn "~/Scripts/scrshot.sh")
   , ((modMask .|. shiftMask, xK_c     ), kill)
 
+  -- media keys
+   , ((0, stringToKeysym "XF86AudioPlay" ), spawn "mpc toggle")
+
   -- mpd
-  , ((0, 0x1008ff14                   ), spawn "mpc toggle")
   , ((modMask .|. controlMask,  xK_h  ), spawn "mpc toggle")
   , ((modMask .|. controlMask,  xK_j  ), spawn "mpc prev")
   , ((modMask .|. controlMask,  xK_k  ), spawn "mpc next")

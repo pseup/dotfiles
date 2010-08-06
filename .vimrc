@@ -32,7 +32,6 @@ set backspace=indent,eol,start
 
 " Command
 set wildmenu
-"set wildmode=list:longest,full
 set wildmode=longest,list
 
 if has("gui_running")
