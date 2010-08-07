@@ -6,8 +6,8 @@ Xft*hintstyle: hintsfull
 Xft*antialias: true
 Xft*rgba: rgb
 
-Xcursor*theme: Vanilla-DMZ
-Xcursor*size: 16
+Xcursor*theme: Vanilla-DMZ-AA
+Xcursor*size: 12
 
 ! }}}
 ! COLORS {{{
