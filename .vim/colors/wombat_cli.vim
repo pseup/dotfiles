@@ -19,8 +19,8 @@ hi Cursor ctermbg=241
 hi Normal ctermfg=7
 hi NonText ctermfg=244 ctermbg=none
 hi LineNr ctermfg=243 ctermbg=none
-hi StatusLine cterm=none ctermfg=4 ctermbg=8
-hi StatusLineNC cterm=none ctermfg=4 ctermbg=8
+hi StatusLine cterm=none ctermfg=4 ctermbg=0
+hi StatusLineNC cterm=none ctermfg=4 ctermbg=0
 hi VertSplit ctermfg=238 ctermbg=238
 hi Folded ctermbg=238 ctermfg=248
 hi Title ctermfg=7
