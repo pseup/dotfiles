@@ -35,8 +35,7 @@ pFocusColor = "#131313" --"#1677B4"
 
 pIconDir = "/home/pseup/.xmonad/icons/"
 pFont    = "-*-mintsstrong-*-*-*-*-8-*-*-*-*-*-*-*"
-pFont2   = "-*-snap-*-*-*-*-10-*-*-*-*-*-*-*"
-pFont3   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
+pFont2   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
 
 dzOptions = " -h 18 -fn '" ++ pFont ++ "' -fg '#BCC2AD' -bg '#131313' -e 'onstart=lower'"
 dzWorkspaces  = "dzen2 -ta l -w 960 -y 1182" ++ dzOptions
@@ -89,7 +88,7 @@ dzPP = defaultPP
 -- Prompt Settings {{{
 pXPConfig = defaultXPConfig
           { position    = Bottom
-          , font        = pFont3
+          , font        = pFont2
           , bgColor     = "#131313"
           , fgColor     = "#B1B1B1"
           , fgHLight    = "#49AAE7"
@@ -124,6 +123,7 @@ pManageHook = composeAll . concat $
   , [ className =? "Gimp"     --> doFloat ]
   , [ resource  =? "popTerm"  --> doCenterFloat ]
   , [ title     =? "-$>>"     --> doFloat ]
+  , [ className =? "!*code*!" --> doCenterFloat ]
   ]
   where
     cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer"]
