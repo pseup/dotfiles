@@ -12,7 +12,7 @@ HISTSIZE=2000
 SAVEHIST=2000
 
 # Prompt
-PROMPT=$'[%{\e[32m%}%n%{\e[0m%}][%{\e[36m%}%~%{\e[0m%}] %{\e[32m%}>> %{\e[0m%}'
+PROMPT=$'[%{\e[34m%}%n%{\e[0m%}][%{\e[32m%}%~%{\e[0m%}] %{\e[34m%}>> %{\e[0m%}'
 
 # UID specific cursor color
 if [[ $TERM != "linux" ]]; then
@@ -28,9 +28,9 @@ export EDITOR="vim"
 export PAGER="vimpager"
 alias less="$PAGER"
 export GREP_COLOR='34'
-LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=0;32:';
-export LS_COLORS
 
+# LS Colors
+[[ -r ~/.dircolors && -x /bin/dircolors ]] && eval $(dircolors -b ~/.dircolors)
 
 # Setopts
 setopt autocd
