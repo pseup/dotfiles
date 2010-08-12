@@ -12,7 +12,8 @@ HISTSIZE=2000
 SAVEHIST=2000
 
 # Prompt
-PROMPT=$'[%{\e[34m%}%n%{\e[0m%}][%{\e[32m%}%~%{\e[0m%}] %{\e[34m%}>> %{\e[0m%}'
+PROMPT=$'[%{\e[34m%}%n%{\e[0m%}][%{\e[1;33m%}%~%{\e[0m%}] %{\e[34m%}>> %{\e[0m%}'
+PROMPT2=$'%{\e[34m%}+>%{\e[0m%} '
 
 # UID specific cursor color
 if [[ $TERM != "linux" ]]; then
@@ -27,7 +28,7 @@ fi
 export EDITOR="vim"
 export PAGER="vimpager"
 alias less="$PAGER"
-export GREP_COLOR='34'
+export GREP_COLOR='1;33'
 
 # LS Colors
 [[ -r ~/.dircolors && -x /bin/dircolors ]] && eval $(dircolors -b ~/.dircolors)
