@@ -5,7 +5,6 @@ gtk-icon-theme-name = "gperfection2"
 gtk-font-name = "Sans 8"
 gtk-toolbar-icon-size = GTK_ICON_SIZE_SMALL_TOOLBAR
 
-
 style "gvimfix" {
   font_name = "Profont 8"
   bg[NORMAL] = "#131313"
