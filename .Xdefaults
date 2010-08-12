@@ -13,8 +13,8 @@ Xcursor*size: 12
 ! COLORS {{{
 
 ! Black
-*color0:  #454545
-*color8:  #222222
+*color0:  #222222
+*color8:  #454545
 ! Red
 *color1:  #9E5641
 *color9:  #CC896D
@@ -58,6 +58,8 @@ URxvt*urgentOnBell: true
 !URxvt*tabbed.tabbar-fg: 0
 !URxvt*tabbed.tab-bg: 0
 !URxvt*tabbed.tab-fg: 12
+
+irc*cursorUnderline:true
 
 popTerm*background: [96]#212121
 popTerm*geometry: 84x8
