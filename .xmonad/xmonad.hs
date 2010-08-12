@@ -122,8 +122,8 @@ pManageHook = composeAll . concat $
   , [ resource  =? "ncmpc"    --> doF (W.shift "util") ]
   , [ className =? "Gimp"     --> doFloat ]
   , [ resource  =? "popTerm"  --> doCenterFloat ]
-  , [ title     =? "-$>>"     --> doFloat ]
-  , [ className =? "!*code*!" --> doCenterFloat ]
+  , [ resource  =? "+>>"      --> doCenterFloat ]
+  , [ title     =? "++>_"     --> doCenterFloat ]
   ]
   where
     cFloats = ["feh", "Mpdtab", "Blender:Render", "MPlayer"]
@@ -158,6 +158,7 @@ pKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- focus
   , ((modMask,               xK_Tab   ), windows W.focusDown)
+  , ((modMask .|. shiftMask, xK_Tab   ), windows W.focusUp)
   , ((modMask,               xK_j     ), windows W.focusDown)
   , ((modMask,               xK_k     ), windows W.focusUp)
   , ((modMask,               xK_m     ), windows W.focusMaster)
